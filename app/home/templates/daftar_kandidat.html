@@ -1,0 +1,173 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Daftar Kandidat {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="modal fade" id="modal-sm">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Teguhkan Pilihan Anda</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Apakah anda Yakin dengan pilihan anda?&hellip;</p>
+        <p id="mycalon">Pilihan: &hellip;</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="sayayakin" type="button" class="btn btn-primary">Saya Yakin</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Daftar Kandidat Ketua BEM FK Undiksha</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Daftar Kandidat</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card card-solid">
+        <div class="card-body pb-0">
+          {%if status["pesan"] == ""%}
+          <center><img src="../static/assets/img/P_Calamary.png" class="img-circle img-fluid center mb-4">
+            <h2 class="mb-4">PEMILIHAN KETUA BEM FK UNDIKSHA</h2>
+            <h2 class="mb-4">PERIODE 2021/2022</h2>
+          </center>
+          {%endif%}
+          {%if status["pesan"] != ""%}
+          <div class="callout callout-success">
+            <h5>{{status["pesan"]}}</h5>
+            <br>
+            <p>Waktu Suara Diambil: {{status["waktuvote"]}}</p>
+            <p>Token kamu: {{status["Token"]}}</p>
+            <p>Token Bisa Digunakan pada menu <a href="{{ url_for('base_blueprint.ceksuara', token=status['Token'])}}">"Cek Suara"</a> Pada Front Page, jika kamu masih ragu mengenai keabsahan pilihan kamu ^_^</p>
+            <button type="button" onclick="window.open('{{ url_for('base_blueprint.printbukti')}}', '_blank');" class="btn btn-block btn-primary">Print Bukti</button>
+          </div>
+          {%endif%}
+          <div class="row d-flex align-items-stretch justify-content-md-center">
+            {%if status["pesan"] == ""%}
+            {% for i in status["kandidat"]%}
+            <div class="col-12 col-sm-6 col-md-4 align-items-stretch">
+              <div class="card bg-light">
+                <div class="card-header text-center border-bottom-0">
+                  Calon Ketua BEM Nomor Urut {{i.nomorurut |safe}}
+                </div>
+                <div class="card-body pt-0 justify-content-md-center">
+                  <div class="row justify-content-md-center">
+                    <div class="col-12">
+                      <center> <img width="150" height="150" src="../static/assets/kandidat/{{ i.foto | default('avatar5.png') }}" alt="user-avatar" class="img-circle img-fluid center"></center>
+                      <h2 class="lead text-center mt-3"><b>{{i.nama |safe}}</b></h2>
+                      <p class="text-muted text-sm text-center"><b>Jurusan: </b> {{i.prodi | safe}} </p>
+                      <ul class="ml-4 mb-0 fa-ul text-muted ">
+                        
+                        <li class="small "><span class="fa-li"><i class="fas fa-lg fa-user"></i></span> NIM: {{i.nim | safe}}</li>
+                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Semester: {{i.semester | safe}}</li>
+                      </ul>
+                    </div>
+                    
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-center">
+                    <form name={{i.nomorurut}} action="" method="post">
+                      <input type="hidden" name="calon" value="{{i.nomorurut}}">
+                    <a id="{{i.nomorurut}}" onclick="ClickSaya(this.id)" href="#voteThis" data-toggle="modal" data-target="#modal-sm" class="btn btn-sm bg-teal mr-3">
+                      <i class="fas fa-person-booth"></i> Pilih Calon
+                    </a>
+                    <a href="{{ url_for('base_blueprint.profilcalon', calon_id=i.id)}}" class="btn btn-sm btn-primary">
+                      <i class="fas fa-user"></i> Lihat Profil
+                    </a>
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%endfor%}
+            {%endif%}
+            
+
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <nav aria-label="Contacts Page Navigation">
+            <ul class="pagination justify-content-center m-0">
+              <li class="page-item active">Gunakan Hak Pilih Anda Demi BEM FK Undiksha yang Lebih Baik</li>
+            </ul>
+          </nav>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+  <!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{url_for('static', filename='assets/js/adminlte.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+
+  <script>
+
+    function ClickSaya(nn){
+      butn = document.getElementById("sayayakin");
+      yakinmsg = document.getElementById("mycalon");
+      namacalon = document.getElementsByClassName("lead")[nn-1];
+      yakinmsg.innerHTML = "Calon Dipilih: " + namacalon.innerHTML;
+      butn.setAttribute("onclick", "document.getElementsByName("+ "'"+ nn + "'" + ")[0].submit()"); 
+    }
+    </script>
+{% endblock javascripts %}

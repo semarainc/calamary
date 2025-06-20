@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>QUICK COUNT PEMIRA BEM FK Undiksha</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<link rel="icon" href="{{url_for('static', filename='assets/favicon.ico')}}" type="image/x-icon">
+  <link rel="canonical" href=""/>
+   <meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/jquery-ui/jquery-ui.min.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/font-awesome/css/all.min.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/animate/animate.min.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/css/default/style.min.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/css/default/style-responsive.min.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/css/default/theme/default.css')}}" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/gritter/css/jquery.gritter.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/nvd3/build/nv.d3.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/sweetalert/sweetalert2.min.css')}}" rel="stylesheet" />
+	<!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/pace/pace.min.js')}}"></script>
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/isotope/isotope.css')}}" rel="stylesheet" />
+	<link href="{{url_for('static', filename='assets/quickcount/themes/plugins/lightbox/css/lightbox.css')}}" rel="stylesheet" />
+	<!-- ================== END BASE JS ================== -->
+
+</head>
+<body style="background: white;">
+
+<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+   <div id="header" class="header navbar-inverse" style="background: #d520d2 !important;">
+      <div class="navbar-header" style="background: #d520d2 !important;">
+         <a href="" class="navbar-brand" style="background: #d520d2 !important;"><span class="navbar-logo" style="background: #d520d2 !important;"></span> <b>PEMIRA BEM FK UNDIKSHA</a>
+         <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </button>
+      </div>
+      <ul class="navbar-nav navbar-right">
+      </ul>
+   </div>
+   <div class="container" style="color: #ff00bf;">
+   <div class="widget bg-silver widget-rounded m-b-30 m-t-20">
+      <div class="widget-header">
+         <h3 class="widget-header-title text-indigo">QUICK COUNT PEMIRA BEM FK UNDIKSHA
+         <span class="text-muted pull-right f-s-12">Pemenang ditentukan berdasarkan hasil rekapitulasi suara dan akan ditetapkan dalam sidang hasil pemira 2021</span></h3>
+      </div>
+      <div class="p-20 p-t-0">
+        <!--Loop Here <?php foreach ($calon->result_array() as $key => $value) {  ?> -->
+         {% for i in candidates_%}
+         <div class="row align-items-center p-b-1">
+            <div class="col-lg-3 col-md-5 col-xs-12">
+               <div class="row">
+                  <div class="col-3 p-10">
+                        <img src="static/assets/kandidat/{{ i.foto | default('avatar5.png') }}" width="35px;">
+                  </div>
+                  <div class="col-9 p-10">
+                     <div class="text-truncate">Nomor Urut: {{i.nomorurut}}</div>
+                     <div class=" text-primary ">{{i.nama}}</div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-9 col-md-7 col-xs-12">
+               <div class="row">
+               <!-- Loop HERE <?php foreach ($dapil->result_array() as $ky => $row) { ?> -->
+                  <div class="col p-10">
+                     <div class="m-b-2">
+                        <div class="ml-2 f-s-11 f-w-700 width-40 text-indigo pull-right text-right"><span id="20"></span></div>
+                     </div>
+                     <div class="d-flex pull-right m-b-2">
+                     <div class="text-green f-s-16 f-w-700 m-b-0 text-right" id="20"></div>
+                     </div>
+                  </div>
+                  <div class="col-lg-2 col-md-4 col-sm-6 col-xs-12 p-10">
+                     <div class="m-b-2 text-truncate">Perolehan Suara
+                        <div class="ml-2 f-s-11 f-w-700 width-40 text-indigo pull-right text-right"><span id="20"></span></div>
+                     </div>
+                     <div class="d-flex pull-right m-b-2">
+                     <div class="text-green f-s-16 f-w-700 m-b-0 text-truncate text-right" id="20">{{suara[i.nomorurut]}} Suara</div>
+                     </div>
+                  </div>
+                  
+               </div>
+            </div>
+         </div>
+         {%endfor%}
+         <hr class="bg-black-transparent-2 m-t-2 m-b-2">
+         <span class="col m-t-5">Powered by Calamary | coded by BEM FK UNDIKSHA <span class="pull-right">Data akan direfresh <span id="second_n">30</span> detik</span></span>
+         </div>
+      </div>
+   </div>
+   
+   
+   
+   </div>
+   <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/jquery/jquery-3.3.1.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/js-cookie/js.cookie.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/js/theme/default.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/js/apps.min.js')}}"></script>
+
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/sweetalert/sweetalert2.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/d3/d3.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/nvd3/build/nv.d3.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/gritter/js/jquery.gritter.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/isotope/jquery.isotope.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/themes/plugins/lightbox/js/lightbox.min.js')}}"></script>
+	<script src="{{url_for('static', filename='assets/quickcount/assets/js/gallery.demo.js')}}"></script>
+	<script>
+		$(document).ready(function() {
+         App.init();
+			Gallery.init();
+		});
+   </script>
+   <script src="{{url_for('static', filename='assets/quickcount/assets/js/jquery.number.js')}}"></script>
+   <script src="{{url_for('static', filename='assets/quickcount/assets/js/d_hitung.js')}}"></script>
+</body>
+</html>

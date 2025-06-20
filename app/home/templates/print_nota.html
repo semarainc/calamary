@@ -1,0 +1,73 @@
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+<title>BUKTI PENGAMBILAN SUARA PEMIRA FK UNDIKSHA 2021</title>
+<!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+<script>
+     //Create PDf from HTML...
+     function CreatePDFfromHTML() {
+        var HTML_Width = $(".html-content").width();
+        var HTML_Height = $(".html-content").height();
+        var top_left_margin = 15;
+        var PDF_Width = HTML_Width + (top_left_margin * 2);
+        var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+        var canvas_image_width = HTML_Width;
+        var canvas_image_height = HTML_Height;
+
+        var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+        html2canvas($(".html-content")[0]).then(function (canvas) {
+            var imgData = canvas.toDataURL("image/jpeg", 1.0);
+            var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+            pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+            for (var i = 1; i <= totalPDFPages; i++) { 
+                pdf.addPage(PDF_Width, PDF_Height);
+                pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
+            }
+            pdf.save("Bukti_PemiraBEMFK_2021.pdf");
+            //$(".html-content").hide();
+        });
+    }
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        CreatePDFfromHTML();
+    });
+    
+    </script>
+{%if status["voter"] is not none%}
+
+<div class="html-content">
+  <p style="text-align: center;">BUKTI PEMUNGUTAN SUARA PEMIRA BEM FK UNDIKSHA</p>
+  <table style="width: 100%; border-collapse: collapse; border-style: none; border-color: #FFFF; background-color: #fffff;" border="1">
+  <tbody>
+  <tr>
+  <td style="width: 33.3333%;">Nama</td>
+  <td style="width: 3.25518%;">:</td>
+  <td style="width: 63.4114%;">{{status["voter"].nama}}</td>
+  </tr>
+  <tr>
+  <td style="width: 33.3333%;">NIM</td>
+  <td style="width: 3.25518%;">:</td>
+  <td style="width: 63.4114%;">{{status["voter"].nim}}</td>
+  </tr>
+  <tr>
+  <td style="width: 33.3333%;">PRODI</td>
+  <td style="width: 3.25518%;">:</td>
+  <td style="width: 63.4114%;">{{status["voter"].prodi}}</td>
+  </tr>
+  <tr>
+  <td style="width: 33.3333%;">TOKEN</td>
+  <td style="width: 3.25518%;">:</td>
+  <td style="width: 63.4114%;">{{status["Token"]}}</td>
+  </tr>
+  <tr>
+  <td style="width: 33.3333%;">WAKTU SUARA DIAMBIL</td>
+  <td style="width: 3.25518%;">:</td>
+  <td style="width: 63.4114%;">{{status["waktuvote"]}}</td>
+  </tr>
+  </tbody>
+  </table>
+  <p>Bukti ini merupakan bukti yang sah</p>
+  <p>Terima Kasih sudah berpartisipasi dalam PEMIRA BEM FK UNDIKSHA 2021</p>
+  </div>
+{%endif%}

@@ -1,0 +1,285 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Input Jadwal Voting {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/daterangepicker/daterangepicker.css')}}">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/select2/css/select2.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/toastr/toastr.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %}   
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Date Picker Pemira</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('base_blueprint.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active">Date Picker</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        
+
+        <div class="row">
+          
+          <!-- /.col (left) -->
+          <div class="col-md">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Date picker Pemira</h3>
+              </div>
+              <div class="card-body">
+                
+                <form method="post" action="">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group">
+                    <label for="inputStatus">Prodi</label>
+                    {{ form.prodi(placeholder="Prodi", id="inputStatus", class="form-control custom-select") }}
+                  </div>
+                  <div class="form-group">
+                    <label for="inputStatus">Angkatan</label>
+                    {{ form.angkatan(placeholder="Angkatan", id="inputName", class="form-control") }}
+                  </div>
+                  <div class="form-group">
+                    <label for="inputStatus">Semester</label>
+                    {{ form.semester(placeholder="Semester", id="inputName", class="form-control") }}
+                  </div>
+                <!-- Date and time range -->
+                <div class="form-group">
+                  <label>Date and time range (Buka dan Tutup Voting):</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="far fa-clock"></i></span>
+                    </div>
+                    <input type="text" class="form-control float-right" id="reservationtime" name="reservasi">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch1" name="abaikan" onclick="KunciDate()">
+                    <label class="custom-control-label" for="customSwitch1">Abaikan Waktu dan Tanggal</label>
+                  </div>
+                </div>
+                <!-- /.form group -->
+              </div>
+                <div class="card-footer">
+                  <button type="submit" name="SetJadwal" class="btn btn-success btn-sm"><i class="fas fa-clock">
+                  </i>
+                  Simpan Jadwal</button>
+                 
+                </div>
+              </form>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+            
+          </div>
+          <!-- /.col (right) -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- Select2 -->
+  <script src="{{url_for('static', filename='assets/plugins/select2/js/select2.full.min.js')}}"></script>
+  <!-- Bootstrap4 Duallistbox -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+  <!-- InputMask -->
+  <script src="{{url_for('static', filename='assets/plugins/moment/moment.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+  <!-- date-range-picker -->
+  <script src="{{url_for('static', filename='assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
+  <!-- bootstrap color picker -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="{{url_for('static', filename='assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+  <!-- Bootstrap Switch -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{url_for('static', filename='assets/js/adminlte.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+  
+  <!-- Toastr -->
+  <script src="{{url_for('static', filename='assets/plugins/toastr/toastr.min.js')}}"></script>
+  <script>
+    function KunciDate() {
+      var checkBox = document.getElementById("customSwitch1");
+      var text = document.getElementById("reservationtime");
+      if (checkBox.checked == true){
+        text.disabled = true;
+      } else {
+         text.disabled = false;
+      }
+    }
+    </script>
+
+  <!-- Page script -->
+  <script>
+    $(function () {
+      //Initialize Select2 Elements
+      $('.select2').select2()
+
+      //Initialize Select2 Elements
+      $('.select2bs4').select2({
+        theme: 'bootstrap4'
+      })
+
+      //Datemask dd/mm/yyyy
+      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+      //Datemask2 mm/dd/yyyy
+      $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+      //Money Euro
+      $('[data-mask]').inputmask()
+
+      //Date range picker
+      $('#reservationdate').datetimepicker({
+          format: 'L'
+      });
+      //Date range picker
+      $('#reservation').daterangepicker()
+      //Date range picker with time picker
+      $('#reservationtime').daterangepicker({
+        timePicker: true,
+        timePickerIncrement: 1,
+        locale: {
+          format: 'MM/DD/YYYY hh:mm A'
+        }
+      })
+      //Date range as a button
+      $('#daterange-btn').daterangepicker(
+        {
+          ranges   : {
+            'Today'       : [moment(), moment()],
+            'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+            'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+          },
+          startDate: moment().subtract(29, 'days'),
+          endDate  : moment()
+        },
+        function (start, end) {
+          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+        }
+      )
+
+      //Timepicker
+      $('#timepicker').datetimepicker({
+        format: 'LT'
+      })
+
+      //Bootstrap Duallistbox
+      $('.duallistbox').bootstrapDualListbox()
+
+      //Colorpicker
+      $('.my-colorpicker1').colorpicker()
+      //color picker with addon
+      $('.my-colorpicker2').colorpicker()
+
+      $('.my-colorpicker2').on('colorpickerChange', function(event) {
+        $('.my-colorpicker2 .fa-square').css('color', event.color.toString());
+      });
+
+      $("input[data-bootstrap-switch]").each(function(){
+        $(this).bootstrapSwitch('state', $(this).prop('checked'));
+      });
+
+    })
+  </script>
+
+  <script>
+    {% if rekap is not none %}
+      {% if rekap.abaikan > 0%}
+        document.getElementsByName("abaikan")[0].checked = true;
+      {%else%}
+      document.getElementsByName("abaikan")[0].checked = false;
+      {%endif%}
+      document.getElementsByName('reservasi')[0].value = "{{rekap.waktuvote}}";
+      KunciDate();
+    {%else%}
+    document.getElementsByName('reservasi')[0].value = "";
+    document.getElementsByName("abaikan")[0].checked = false;
+    KunciDate();
+    {%endif%}
+  </script>
+
+<script>
+  var sukses = -1;
+  var pesan = -1;
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      var sukses = 'True';
+      var pesan = '{{ messages[0]}}';
+    {% endif %}
+  {% endwith %}
+  {% if msg %}
+      var sukses = '{{ success | safe }}';
+      var pesan = '{{ msg | safe }}';
+  {% endif %}
+  console.log(sukses);
+  console.log(pesan);
+  if (sukses != -1){
+  if(sukses == 'True'){
+    toastr.success(pesan);
+  }
+  else{
+    toastr.error(pesan);
+  }}
+  </script>
+
+{% endblock javascripts %}

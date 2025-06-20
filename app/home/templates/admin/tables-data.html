@@ -1,0 +1,222 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Daftar Pemilih {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/toastr/toastr.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %} 
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Daftar Pemilih</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('base_blueprint.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active">Daftar Pemilih</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Daftar Pemilih Pemira FK Undiksha 2021</h3>
+              </div>
+              <!-- /.card-header -->
+              <a class="btn btn-info btn-sm" href="{{ url_for('base_blueprint.addvoter')}}">
+                <i class="fas fa-pencil-alt">
+                </i>
+                Input Pemilih
+            </a>
+              <div class="card-body">
+                <a class="btn btn-success btn-sm" href="{{ url_for('base_blueprint.uploadvoter')}}">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Upload Data Pemilih (CSV)
+              </a>
+                <a class="btn btn-info btn-sm" href="{{ url_for('base_blueprint.printrekap', tipe='pemilih')}}">
+                  <i class="fas fa-print">
+                  </i>
+                  Print Rekap Pemilih
+              </a>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>id</th>
+                    <th>Nama</th>
+                    <th>Nim</th>
+                    <th>Angkatan</th>
+                    <th>Semester</th>
+                    <th>Alamat</th>
+                    <th>Prodi</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Handle</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                   
+                    {% for pemilih in voters %}
+                  <tr>
+                      <td>{{ 'VOTERS-%04d' % pemilih.id }}</td>
+                      <td>{{pemilih.nama}}</td>
+                      <td>{{pemilih.nim}}</td>
+                      <td>{{pemilih.angkatan}}</td>
+                      <td>{{pemilih.semester}}</td>
+                      <td>{{pemilih.alamat}}</td>
+                      <td>{{pemilih.prodi}}</td>
+                      {% if pemilih.id in milih%}
+                      <td style="background-color: rgb(0, 255, 0);">Sudah Memilih</td>
+                      {%else%}
+                      <td style="background-color: rgba(255, 0, 0, 0.603);">Belum Memilih</td>
+                      {%endif%}
+                      <td>{{pemilih.email}}</td>
+                      <td>{{pemilih.username}}</td>
+                      <td>{{pemilih.password2}}</td>
+                      <td>
+                        <a class="btn btn-info btn-sm" href="{{ url_for('base_blueprint.editvoter', user_id=pemilih.id)}}">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="{{ url_for('base_blueprint.deletevoter', user_id=pemilih.id)}}">
+                            <i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </a>
+                      </td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>id</th>
+                    <th>Nama</th>
+                    <th>Nim</th>
+                    <th>Angkatan</th>
+                    <th>Semester</th>
+                    <th>Alamat</th>
+                    <th>Prodi</th>
+                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Handle</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- DataTables -->
+  <script src="{{url_for('static', filename='assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+  <!-- Calamary App Based on AdminLTE -->
+  <script src="{{url_for('static', filename='assets/js/adminlte.min.js')}}"></script>
+
+  <!-- bs-custom-file-input -->
+  <script src="{{url_for('static', filename='assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
+  <!-- Toastr -->
+  <script src="{{url_for('static', filename='assets/plugins/toastr/toastr.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+      $('#example1').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "defaultContent": "",
+        "language": { "infoEmpty": "Tidak Ada Data Pemilih",
+                "emptyTable": "Tidak Ada Data Pemilih",
+                "zeroRecords": "Tidak Ada Data Pemilih"},
+      });
+    });
+  </script>
+
+<script>
+   var sukses = -1;
+  var pesan = -1;
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      var sukses = 'True';
+      var pesan = '{{ messages[0]}}';
+    {% endif %}
+  {% endwith %}
+  {% if msg %}
+      var sukses = '{{ success | safe }}';
+      var pesan = '{{ msg | safe }}';
+  {% endif %}
+  //console.log({{milihList}});
+  //console.log(pesan);
+  if (sukses != -1){
+  if(sukses == 'True'){
+    toastr.success(pesan);
+  }
+  else{
+    toastr.error(pesan);
+  }}
+  </script>
+
+
+{% endblock javascripts %}

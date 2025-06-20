@@ -1,0 +1,207 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Upload Data Pemilih {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/toastr/toastr.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %} 
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Upload Daftar Pemilih (BETA)</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('base_blueprint.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active">Upload Daftar Pemilih</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Upload Daftar Pemilih Pemira FK Undiksha 2021</h3>
+              </div>
+              <form method="post" action="" enctype="multipart/form-data">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputFile">File input (*.csv)</label>
+                  <div class="custom-file">
+                    <input type="file" name="csvfile" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Upload File</button>
+              </div>
+            </form>
+            {% if candidates_ is not none%}
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>NIM</th>
+                    <th>NAMA</th>
+                    <th>PRODI</th>
+                    <th>ALAMAT</th>
+                    <th>ANGKATAN</th>
+                    <th>SEMESTER</th>
+                    <th>USERNAME</th>
+                    <th>PASSWORD</th>
+                    <th>EMAIL</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for pemilih in candidates_ %}
+                  <tr>
+                      <td>{{pemilih[0]}}</td>
+                      <td>{{pemilih[1]}}</td>
+                      <td>{{pemilih[2]}}</td>
+                      <td>{{pemilih[3]}}</td>
+                      <td>{{pemilih[4]}}</td>
+                      <td>{{pemilih[5]}}</td>
+                      <td>{{pemilih[7]}}</td>
+                      <td>{{pemilih[8]}}</td>
+                      <td>{{pemilih[6]}}</td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>NIM</th>
+                    <th>NAMA</th>
+                    <th>PRODI</th>
+                    <th>ALAMAT</th>
+                    <th>ANGKATAN</th>
+                    <th>SEMESTER</th>
+                    <th>USERNAME</th>
+                    <th>PASSWORD</th>
+                    <th>EMAIL</th>
+                  </tr>
+                  </tfoot>
+                </table>
+                <a class="btn btn-success btn-sm" href="{{ url_for('base_blueprint.uploadvoter', status=1)}}">
+                  <i class="fas fa-pencil-alt">
+                  </i>
+                  Data Sudah Sesuai
+              </a>
+              </div>
+              {%endif%}
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- DataTables -->
+  <script src="{{url_for('static', filename='assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+  <!-- Calamary App Based on AdminLTE -->
+  <script src="{{url_for('static', filename='assets/js/adminlte.min.js')}}"></script>
+
+  <!-- bs-custom-file-input -->
+  <script src="{{url_for('static', filename='assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
+  <!-- Toastr -->
+  <script src="{{url_for('static', filename='assets/plugins/toastr/toastr.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+      $('#example1').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "defaultContent": "",
+        "language": { "infoEmpty": "Tidak Ada Data Pemilih",
+                "emptyTable": "Tidak Ada Data Pemilih",
+                "zeroRecords": "Tidak Ada Data Pemilih"},
+      });
+    });
+  </script>
+<script>
+  $(function () {
+    bsCustomFileInput.init();
+  });
+  </script>
+<script>
+   var sukses = -1;
+  var pesan = -1;
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      var sukses = 'True';
+      var pesan = '{{ messages[0]}}';
+    {% endif %}
+  {% endwith %}
+  {% if msg %}
+      var sukses = '{{ success | safe }}';
+      var pesan = '{{ msg | safe }}';
+  {% endif %}
+  //console.log(sukses);
+  //console.log(pesan);
+  if (sukses != -1){
+  if(sukses == 'True'){
+    toastr.success(pesan);
+  }
+  else{
+    toastr.error(pesan);
+  }}
+  </script>
+
+
+{% endblock javascripts %}

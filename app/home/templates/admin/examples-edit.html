@@ -1,0 +1,196 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Edit Pemilih {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini {% endblock body_class %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/toastr/toastr.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+
+<form method="post" action="">
+  {{ form.hidden_tag() }}
+  {{ form.id }}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Edit Pemilih Pemira 2021</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('base_blueprint.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active">Edit Pemilih</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Data Pemilih</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+                   
+            
+            <div class="card-body">
+              <div class="form-group">
+                <label for="inputName">Nama</label>
+                {{ form.nama(placeholder="Nama", id="inputName", class="form-control") }}
+              </div>
+              <div class="form-group">
+                <label for="inputName">NIM</label>
+                {{ form.nim(placeholder="Nim", id="inputName", class="form-control") }}
+              </div>
+              <div class="form-group">
+                <label for="inputDescription">Alamat</label>
+                {{ form.alamat(placeholder="Alamat", id="inputDescription", rows="4", class="form-control") }}
+              </div>
+              <div class="form-group">
+                <label for="inputStatus">Prodi</label>
+                {{ form.prodi(placeholder="Prodi", id="inputStatus", class="form-control custom-select") }}
+              </div>
+              <div class="form-group">
+                <label for="inputName">Angkatan</label>
+                {{ form.angkatan(placeholder="Angkatan", id="inputName", class="form-control") }}
+              </div>
+              <div class="form-group">
+                <label for="inputName">Semester</label>
+                {{ form.semester(placeholder="Semester", id="inputName", class="form-control") }}
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <div class="col-md-6">
+          <div class="card card-secondary">
+            <div class="card-header">
+              <h3 class="card-title">Akun Pemilih</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="inputClientCompany">Email</label>
+                {{ form.email(placeholder="Email", id="inputClientCompany", class="form-control") }}
+              </div>
+              <div class="form-group">
+                <label for="inputProjectLeader">Username</label>
+                {{ form.username(placeholder="Username", id="inputProjectLeader", class="form-control") }}
+              </div>
+              <div class="form-group">
+                <label for="inputProjectLeader">Password (kosongkan apabila tidak diubah)</label>
+                {{ form.password(placeholder="Password", id="inputProjectLeader", class="form-control") }}
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <a href="{{ url_for('base_blueprint.voterlist')}}" class="btn btn-secondary">Batalkan</a>
+          <input type="submit" name="editvoter" value="Edit Data" class="btn btn-success float-right">
+        </div>
+      </div>
+    </section>
+    <!-- /.content -->
+  </div>
+</form>
+  <!-- /.content-wrapper -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- Toastr -->
+  <script src="{{url_for('static', filename='assets/plugins/toastr/toastr.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{url_for('static', filename='assets/js/adminlte.min.js')}}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+
+  <script>
+    document.getElementsByName("semester")[0].addEventListener("keypress", function (evt) {
+        if (evt.which < 48 || evt.which > 57)
+        {
+            evt.preventDefault();
+        }
+    });
+
+    document.getElementsByName("angkatan")[0].addEventListener("keypress", function (evt) {
+        if (evt.which < 48 || evt.which > 57)
+        {
+            evt.preventDefault();
+        }
+    });
+
+    document.getElementsByName("nim")[0].addEventListener("keypress", function (evt) {
+        if (evt.which < 48 || evt.which > 57)
+        {
+            evt.preventDefault();
+        }
+    });
+  </script>
+  <script>
+    var sukses = -1;
+    var pesan = -1;
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        var sukses = 'True';
+        var pesan = '{{ messages[0]}}';
+      {% endif %}
+    {% endwith %}
+    {% if msg %}
+        var sukses = '{{ success | safe }}';
+        var pesan = '{{ msg | safe }}';
+    {% endif %}
+    console.log(sukses);
+    console.log(pesan);
+    if (sukses != -1){
+  if(sukses == 'True'){
+    toastr.success(pesan);
+  }
+  else{
+    toastr.error(pesan);
+  }}
+    </script>
+
+{% endblock javascripts %}

@@ -1,0 +1,260 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Admin Dashboard {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed accent-indigo {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %}  
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Dashboard PDD</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Dashboard PDD</li>
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              
+              <div class="card-header">
+                <h5 class="card-title"><center>Rekapitulasi Suara Kandidat</center></h5>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="maximize">
+                    <i class="fas fa-expand"></i>
+                  </button>
+                  
+                  <div class="btn-group">
+                    
+                </div>
+              </div><br>
+              <div class="card-body">
+                <!-- Info boxes -->
+                <div class="row justify-content-center">
+                  
+                  <!-- /.col -->
+                  <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-vote-yea"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">Hak Suara Terpakai</span>
+                        <span id="haksuara" class="info-box-number">{{status["HakSuara"]}}</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+                  <!-- /.col -->
+
+                  <!-- fix for small devices only -->
+                  <div class="clearfix hidden-md-up"></div>
+
+                  <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user-friends"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">Kandidat</span>
+                        <span id="kandidat" class="info-box-number">{{status["Calon"] | safe}}</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                      <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+                      <div class="info-box-content">
+                        <span class="info-box-text">Pemilih</span>
+                        <span id="pemilih" class="info-box-number">{{status["Pemilih"]}}</span>
+                      </div>
+                      <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+                
+                <!-- /.row -->
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <div class="row justify-content-center">
+                  <div class="col-lg-8 justify-content-center">
+                    <center><div class="container-fluid" id="data-container"></div></center>
+                    
+                    <!-- /.chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+              
+      </div><!--/. container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+  <!-- REQUIRED SCRIPTS -->
+  <!-- jQuery -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- Bootstrap -->
+  <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- overlayScrollbars -->
+  <script src="{{url_for('static', filename='assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{url_for('static', filename='assets/js/adminlte.js')}}"></script>
+
+  <!-- OPTIONAL SCRIPTS -->
+  <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <script src="{{url_for('static', filename='assets/plugins/jquery-mousewheel/jquery.mousewheel.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/raphael/raphael.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/jquery-mapael/jquery.mapael.min.js')}}"></script>
+  <script src="{{url_for('static', filename='assets/plugins/jquery-mapael/maps/usa_states.min.js')}}"></script>
+  <!-- ChartJS -->
+  <script src="{{url_for('static', filename='assets/plugins/chart.js/Chart.min.js')}}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/google-palette/1.1.0/palette.min.js" ></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+  <script>
+   var chart;
+var optionss;
+
+/**
+ * Request data from the server, add it to the graph and set a timeout
+ * to request again
+ */
+function requestData() {
+    $.ajax({
+        url: '/pemira/bem/cdatavote',
+        success: function(point) {
+            console.log(point);
+            var d = new Date();
+            chart.setTitle(null, { text: 'Waktu Rekap: ' + d });
+            //if (chart.series.length > 0){
+            //chart.series[0].remove(false);}
+            //chart.addSeries({name: "Adib", data:[100]});
+            chart.series[0].setData(point[0]["data"]);
+            chart.series[1].setData(point[1]["data"]);
+            document.getElementById("pemilih").innerHTML = point[2]["Pemilih"];
+            document.getElementById("kandidat").innerHTML = point[2]["Kandidat"];
+            document.getElementById("haksuara").innerHTML = point[2]["HakSuara"];
+                                                
+            //chart.addSeries({name: "Adib", data:[0]});
+            // add the point
+            //chart.series[0].addPoint(point, true, shift);
+
+            // call it again after one second
+            setTimeout(requestData, 1000);
+        },
+        cache: true
+    });
+}
+$(document).ready(function() {
+    optionss = {
+        chart: {
+            renderTo: 'data-container',
+            defaultSeriesType: 'column',
+            events: {
+                load: requestData
+            }
+        },
+        title: {
+            text: 'LIVE COUNT PEMIRA BEM FK UNDIKSHA'
+        },
+        subtitle: {
+            text: 'Waktu Rekap: Null'
+        },
+        xAxis: {
+            categories: [""],
+            title: {
+                text: "Kandidat Ketua BEM FK UNDIKSHA"
+            },
+            crosshair: true
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Perolehan Suara (Suara)'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">Nama Calon</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} Suara</b></td></tr>',
+            footerFormat: '</table>',
+            shared: false,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true
+                }
+            },
+        },
+        series: [{name: "Ruby Firdaus", data:[0]}, {name: "Zahrowi Adib Arnesa As-sukron", data:[0]}]
+    }
+chart = new Highcharts.chart('data-container', optionss);
+});
+  </script>
+
+{% endblock javascripts %}

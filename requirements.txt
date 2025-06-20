@@ -1,0 +1,13 @@
+flask==2.2.0
+flask_login
+flask_migrate
+flask_wtf
+flask_sqlalchemy
+flask_caching
+email_validator
+python-decouple
+uwsgi
+psycopg2-binary
+python-dotenv
+pandas
+xlsxwriter

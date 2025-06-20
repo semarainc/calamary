@@ -1,0 +1,164 @@
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-light-indigo elevation-4">
+    <!-- Brand Logo -->
+    <a href="{{ url_for('base_blueprint.dashboard')}}" class="brand-link navbar-indigo">
+      <img src="{{url_for('static', filename='assets/img/P_Calamary.png')}}" alt="Pemira Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-bold" style="color: white;">PEMIRA BEM FK</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{url_for('static', filename='assets/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{{ url_for('base_blueprint.logout') }}" class="d-block">
+            {{ current_user.username }} - Logout
+          </a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      {% if current_user.is_authenticated %}
+      {% if current_user.role == "admin" %}
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item has-treeview {% if 'index' in segment %} menu-open {% endif %}">
+            <a href="#" class="nav-link {% if 'index' in segment %} active {% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ url_for('base_blueprint.dashboard')}}" class="nav-link {% if 'index3.html' in segment %} active {% endif %}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Menu Utama</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('base_blueprint.voterlist')}}" class="nav-link {% if 'widgets' in segment %} active {% endif %}">
+              <i class="nav-icon fas fa-person-booth"></i>
+              <p>
+                Daftar Pemilih
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url_for('base_blueprint.candidatelist')}}" class="nav-link {% if 'widgets' in segment %} active {% endif %}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Daftar Kandidat Calon
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ url_for('base_blueprint.rekapitulasi')}}" class="nav-link {% if 'widgets' in segment %} active {% endif %}">
+              <i class="nav-icon fas fa-vote-yea"></i>
+              <p>
+                Rekaputilasi Suara
+              </p>
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a href="{{ url_for('base_blueprint.rekaptimer')}}" class="nav-link {% if 'widgets' in segment %} active {% endif %}">
+              <i class="nav-icon fas fa-clock"></i>
+              <p>
+                Atur Waktu Voting
+              </p>
+            </a>
+          </li>
+          {% elif current_user.role == "voter" %}
+
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <!-- Add icons to the links using the .nav-icon class
+                  with font-awesome or any other icon font library -->
+              <li class="nav-item has-treeview {% if 'index' in segment %} menu-open {% endif %}">
+                <a href="#" class="nav-link {% if 'index' in segment %} active {% endif %}">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url_for('base_blueprint.Vdash')}}" class="nav-link {% if 'index3.html' in segment %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Menu Utama</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a href="{{ url_for('base_blueprint.votethis')}}" class="nav-link {% if 'widgets' in segment %} active {% endif %}">
+                  <i class="nav-icon fas fa-person-booth"></i>
+                  <p>
+                    Pilih Calon Ketua BEM
+                  </p>
+                </a>
+              </li>
+
+          {% else %}
+
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <!-- Add icons to the links using the .nav-icon class
+                  with font-awesome or any other icon font library -->
+              <li class="nav-item has-treeview {% if 'index' in segment %} menu-open {% endif %}">
+                <a href="#" class="nav-link {% if 'index' in segment %} active {% endif %}">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ url_for('base_blueprint.indexPDD')}}" class="nav-link {% if 'index3.html' in segment %} active {% endif %}">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Menu Utama</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+
+          {%endif%}
+          {%endif%}
+
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+  

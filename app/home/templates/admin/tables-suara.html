@@ -1,0 +1,223 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Rekapitulasi Suara {% endblock %} 
+
+<!-- Element injected in the BODY element -->
+{% block body_class %} {% endblock body_class %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/fontawesome-free/css/all.min.css')}}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/css/adminlte.min.css')}}">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='assets/plugins/toastr/toastr.min.css')}}">
+
+{% endblock stylesheets %}
+
+{% block content %} 
+
+<div class="modal fade" id="modal-sm">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Apakah Akan Dihapus?</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Apakah anda yakin akan menghapus Semua Hasil Voting?&hellip;</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="sayayakin" type="button" class="btn btn-primary">Saya Yakin</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Rekapitulasi Suara Pemira</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="{{ url_for('base_blueprint.dashboard')}}">Home</a></li>
+              <li class="breadcrumb-item active">Rekapitulasi Suara</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Rekapitulasi Suara Pemira BEM FK 2021</h3>
+              </div>
+              <!-- /.card-header -->
+              <a class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-sm" onclick="ClickSaya('baka');">
+                <i class="fas fa-trash">
+                </i>
+                Clear Rekap Suara
+            </a>
+            
+              <div class="card-body">
+                <a class="btn btn-success btn-sm" href="{{ url_for('base_blueprint.printrekap', tipe='suara')}}">
+                  <i class="fas fa-print">
+                  </i>
+                  Print Rekap Suara
+              </a>
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>Nomor Urut</th>
+                    <th>Pemilih</th>
+                    <th>Token</th>
+                    <th>Waktu</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {% for pemilih in candidates_ %}
+                  <tr>
+                      <td>{{pemilih.nomorurut}}</td>
+                      <td>{{pemilih.jurusan}}</td>
+                      <td>{{pemilih.token}}</td>
+                      <td>{{pemilih.waktu}}</td>
+                  </tr>
+                  {%endfor%}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                    <th>Nomor Urut</th>
+                    <th>Pemilih</th>
+                    <th>Token</th>
+                    <th>Waktu</th>
+                  </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+ <!-- jQuery -->
+ <script src="{{url_for('static', filename='assets/plugins/jquery/jquery.min.js')}}"></script>
+ <!-- Bootstrap 4 -->
+ <script src="{{url_for('static', filename='assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+ <!-- DataTables -->
+ <script src="{{url_for('static', filename='assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+ <script src="{{url_for('static', filename='assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+ <script src="{{url_for('static', filename='assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+ <script src="{{url_for('static', filename='assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+ <!-- Calamary App Based on AdminLTE -->
+ <script src="{{url_for('static', filename='assets/js/adminlte.min.js')}}"></script>
+
+ <!-- bs-custom-file-input -->
+ <script src="{{url_for('static', filename='assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
+ <!-- Toastr -->
+ <script src="{{url_for('static', filename='assets/plugins/toastr/toastr.min.js')}}"></script>
+ <!-- AdminLTE for demo purposes -->
+ <script src="{{url_for('static', filename='assets/js/demo.js')}}"></script>
+  <script>
+    $(function () {
+      $('#example1').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false,
+        "responsive": true,
+        "defaultContent": "",
+        "language": { "infoEmpty": "Tidak Ada Data Suara",
+                "emptyTable": "Tidak Ada Data Suara.",
+                "zeroRecords": "Tidak Ada Data Suara."},
+      });
+    });
+  </script>
+
+<script>
+   var sukses = -1;
+  var pesan = -1;
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      var sukses = 'True';
+      var pesan = '{{ messages[0]}}';
+    {% endif %}
+  {% endwith %}
+  {% if msg %}
+      var sukses = '{{ success | safe }}';
+      var pesan = '{{ msg | safe }}';
+  {% endif %}
+  console.log(sukses);
+  console.log(pesan);
+  if (sukses != -1){
+  if(sukses == 'True'){
+    toastr.success(pesan);
+  }
+  else{
+    toastr.error(pesan);
+  }}
+  </script>
+
+<script>
+  function SendPost(){
+    var http = new XMLHttpRequest();
+    var url = '{{ url_for('base_blueprint.removevote')}}';
+    var params = 'empty';
+    http.open('POST', url, true);
+
+    //Send the proper header information along with the request
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    http.onreadystatechange = function() {//Call a function when the state changes.
+        if(http.readyState == 4 && http.status == 200) {
+            alert("Record Sudah Dihapus");
+            location.reload(); 
+        }
+    }
+    http.send(params);
+  }
+  function ClickSaya(nn){
+    butn = document.getElementById("sayayakin");
+    butn.setAttribute("onclick", "SendPost()"); 
+  }
+  </script>
+
+{% endblock javascripts %}
